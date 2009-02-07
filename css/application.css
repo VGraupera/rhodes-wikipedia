@@ -1,0 +1,12 @@
+body {padding:0;margin:0;}
+
+input[type="search"] {
+-webkit-appearance: searchfield;
+-webkit-box-sizing: border-box;
+}
+
+#search_form {
+	background: gray url(toolbar.png) top left repeat-x;
+	padding:5px;
+	margin:0;
+}
