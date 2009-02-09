@@ -3,6 +3,12 @@ require 'rho/rhocontroller'
 class WikipediaPageController < Rho::RhoController
 
   def index
+    puts "WikipediaPage index"
+    # force fetch of daily wikipedia homepage
+    if @params["home"]
+      wiki_get("::Home")
+    end
+    
     render
   end
   
@@ -24,24 +30,32 @@ class WikipediaPageController < Rho::RhoController
   end
   
   def fetch
-    puts "WikipediaPage fetch with #{@params['search'].inspect.to_s}\n"
-    
-    @page = WikipediaPage.new(:search => @params['id'])
-    @page.save
-    
-    SyncEngine::dosync
+    puts "WikipediaPage fetch"
+      
+    wiki_get(@params['id'])
 
     redirect :action => :index
   end
   
   def create
-    puts "WikipediaPage create with #{@params['search'].inspect.to_s}\n"
-    
-    @page = WikipediaPage.new(:search => @params['search'])
-    @page.save
-    
-    SyncEngine::dosync
+    puts "WikipediaPage create"
+      
+    wiki_get(@params['search'])
 
     redirect :action => :index
+  end
+  
+  protected
+  
+  def wiki_get(article)
+    puts "wiki_get(#{article})\n"
+    
+    @page = WikipediaPage.new(:search => article)
+    @page.save
+    
+    success = SyncEngine::login('wikipedia', 'doesnotmatter')
+    if success
+      SyncEngine::dosync
+    end
   end
 end
