@@ -15,7 +15,12 @@ class WikipediaPageController < Rho::RhoController
   def show
     puts "WikipediaPage show"
     
-    @page = WikipediaPage.find(:all)[0]
+    @pages = WikipediaPage.find(:all)
+    puts @pages.length
+    
+    @page = @pages[0]
+    puts @pages.inspect.to_s
+    
 
     # page_pieces = []
     # # elements start at 0
