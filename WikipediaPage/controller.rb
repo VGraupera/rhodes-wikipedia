@@ -19,17 +19,14 @@ class WikipediaPageController < Rho::RhoController
     puts @pages.length
     
     @page = @pages[0]
-    puts @pages.inspect.to_s
     
-
-    # page_pieces = []
-    # # elements start at 0
-    # 0.upto(@page.packet_count.to_i - 1) do |page|
-    #  page_pieces << @page.send("p_#{page}".to_s)
-    # end
-    # encoded_page = page_pieces.join
-
-    @data = @page.data.unpack("m")[0]
+    # show contents, otherwise query for homepage
+    if @page
+      @data = @page.data.unpack("m")[0]
+    else
+      @data = "Please wait..."
+      wiki_get("::Home")
+    end
 
     render :action => :show, :layout => false
   end
@@ -57,10 +54,18 @@ class WikipediaPageController < Rho::RhoController
     
     @page = WikipediaPage.new(:search => article)
     @page.save
-    
+
+    WikipediaPage.set_notification("/Wikipedia/WikipediaPage")
+
     success = SyncEngine::login('wikipedia', 'doesnotmatter')
     if success
       SyncEngine::dosync
     end
+
+    # if SyncEngine::logged_in == 0
+    #   SyncEngine::login('wikipedia', 'doesnotmatter')
+    # end
+    # 
+    # WikipediaPage.ask(article)
   end
 end
