@@ -19,10 +19,13 @@ class WikipediaPageController < Rho::RhoController
     puts @pages.length
     
     @page = @pages[0]
+    puts @page.inspect.to_s
     
     # show contents, otherwise query for homepage
     if @page
-      @data = @page.data.unpack("m")[0]
+      #if there is record but no data then sync in not complete
+      @data = @page.data ? @page.data.unpack("m")[0] : "Requesting..."
+      SyncEngine::dosync
     else
       @data = "Please wait..."
       wiki_get("::Home")
@@ -57,7 +60,7 @@ class WikipediaPageController < Rho::RhoController
 
     WikipediaPage.set_notification("/Wikipedia/WikipediaPage")
 
-    success = SyncEngine::login('wikipedia', 'doesnotmatter')
+    success = SyncEngine::login('anonymous', 'password')
     if success
       SyncEngine::dosync
     end
