@@ -37,10 +37,11 @@ class WikipediaPageController < Rho::RhoController
   def fetch
     puts "WikipediaPage fetch with params=#{@params.inspect.to_s}"
       
-    # strip braces
-    wiki_get(@params['id'])
+    # strip braces which surround ID
+    @search = strip_braces(@params['id'])
+    wiki_get(@search)
 
-    redirect :action => :index, :params => {:search => @params['id']}
+    redirect :action => :index, :query => { :search => @search }
   end
   
    # GET /WikipediaPage/history
@@ -72,5 +73,10 @@ class WikipediaPageController < Rho::RhoController
     
       WikipediaPage.ask(article)
     end
+  end
+  
+  private
+  def strip_braces(str=nil)
+    str ? str.gsub(/\{/,"").gsub(/\}/,"") : nil
   end
 end
