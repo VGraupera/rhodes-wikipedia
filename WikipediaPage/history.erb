@@ -1,0 +1,10 @@
+<div>
+	<h1>History</h1>
+
+<ul>
+<% @pages.each do |page| %>
+	<li><%= "<a href=\"index?search=#{page.question}\">#{page.question}</a>" %></li>
+<% end %>
+</ul>
+
+</div>

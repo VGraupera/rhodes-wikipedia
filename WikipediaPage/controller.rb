@@ -46,7 +46,8 @@ class WikipediaPageController < Rho::RhoController
   
    # GET /WikipediaPage/history
   def history
-    @pages = WikipediaPage.find(:all, {:order => :created_at})
+    @pages = WikipediaPage.find(:all, {:conditions => {'section' => "header"}}, {:order => 'created_at'})
+    render :action => :history
   end
   
   protected
@@ -58,12 +59,12 @@ class WikipediaPageController < Rho::RhoController
     @page = WikipediaPage.find(object_id)
     
     if @page
-      puts "++++++Cache hit for #{article}"
+      # puts "++++++Cache hit for #{article}"
       puts @page.inspect.to_s
     end
     
     unless @page
-      puts "------Cache miss for #{article}"
+      # puts "------Cache miss for #{article}"
       WikipediaPage.set_notification("/Wikipedia/WikipediaPage?search=#{article}")
 
       # make sure we are logged in, this user must exist in rhosync or sync will fail
