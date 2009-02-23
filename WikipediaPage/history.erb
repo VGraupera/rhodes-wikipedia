@@ -3,7 +3,7 @@
 
 <ul>
 <% @pages.each do |page| %>
-	<li><%= "<a href=\"index?search=#{page.question}\">#{page.question}</a>" %></li>
+	<li><%= "<a href=\"index?search=#{Rho::RhoSupport.url_encode(page.question)}\">#{page.question.gsub('_', ' ')}</a>" %></li>
 <% end %>
 </ul>
 
