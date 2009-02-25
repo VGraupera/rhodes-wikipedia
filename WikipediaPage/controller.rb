@@ -1,4 +1,5 @@
 require 'rho/rhocontroller'
+require 'rho/rhosupport'
 
 class WikipediaPageController < Rho::RhoController
 
@@ -20,7 +21,7 @@ class WikipediaPageController < Rho::RhoController
     
     wiki_get(@search)
 
-    puts @page.inspect.to_s
+    #puts @page.inspect.to_s
     
     # show contents if available
     if @page
@@ -47,6 +48,7 @@ class WikipediaPageController < Rho::RhoController
    # GET /WikipediaPage/history
   def history
     @pages = WikipediaPage.find(:all, {:conditions => {'section' => "header"}}, {:order => 'created_at'})
+    @pages = @pages.reverse
     render :action => :history
   end
   
@@ -59,14 +61,21 @@ class WikipediaPageController < Rho::RhoController
     @page = WikipediaPage.find(object_id)
     
     if @page
-      # puts "++++++Cache hit for #{article}"
-      puts @page.inspect.to_s
+      puts "++++++Cache hit for #{article}"
+      #puts @page.inspect.to_s
     end
     
     unless @page
-      # puts "------Cache miss for #{article}"
-      WikipediaPage.set_notification("/Wikipedia/WikipediaPage?search=#{article}")
-
+      puts "------Cache miss for #{article}"
+      
+      if article == "::Home"
+        WikipediaPage.set_notification("/Wikipedia/WikipediaPage")
+      else
+        # need to encode the article in the url or the login/logged_in functions will fail
+        encoded_article = Rho::RhoSupport.url_encode(article)
+        WikipediaPage.set_notification("/Wikipedia/WikipediaPage?search=#{encoded_article}")
+      end
+    
       # make sure we are logged in, this user must exist in rhosync or sync will fail
       if SyncEngine::logged_in == 0
         SyncEngine::login('anonymous', 'password')
