@@ -1,10 +1,14 @@
-<div>
-	<h1>History</h1>
+<div class="toolbar">
+  <span class="left_button"><a class="button">Close</a></span>
+	<h1 id="pageTitle">History</h1>
+	<span class="right_button"><a class="button">Clear</a></span>
+</div>
 
+
+<div id="history">
 <ul>
 <% @pages.each do |page| %>
 	<li><%= "<a href=\"index?search=#{Rho::RhoSupport.url_encode(page.question)}\">#{page.question.gsub('_', ' ')}</a>" %></li>
 <% end %>
 </ul>
-
 </div>
