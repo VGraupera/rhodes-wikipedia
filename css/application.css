@@ -5,19 +5,19 @@ body {padding:0;margin:0;}
 	margin:0;
 	position:relative;
 	padding:0;
-	height: 28px; 
+	height: 45px; 
 }
 
-#search_form input { width:250px; height: 19px; padding:0;
-	position:absolute; left:20px; top:0; border:none; margin: 0;
+#search_form input { width:250px; height: 45px; padding:0;
+	position:absolute; left:35px; top:0; border:none; margin: 0;
 	-webkit-border-radius: 0px;
 	background: url(searchfield_repeat.png) center top repeat-x;
 }
 
 
-#search_form .left { width: 20px; height: 19px; position:absolute;left:20px;top:4px;border: none; margin: 0;padding:0;
+#search_form .left { width: 35px; height: 45px; position:absolute;left:15px;top:0;border: none; margin: 0;padding:0;
 	background: url(searchfield_leftcap.png) left top no-repeat; }
-#search_form .right { width: 10px; height: 19px; position:absolute;left:270px; top:0px;border: none; margin: 0;padding:0;
+#search_form .right { width: 21px; height: 45px; position:absolute;left:270px; top:0px;border: none; margin: 0;padding:0;
 	background: url(searchfield_rightcap.png) right top no-repeat; }
 	
 .clearer {clear:both;}
