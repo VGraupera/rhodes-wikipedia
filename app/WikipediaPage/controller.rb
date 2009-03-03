@@ -74,11 +74,11 @@ class WikipediaPageController < Rho::RhoController
       puts "------Cache miss for #{article}"
       
       if article == "::Home"
-        WikipediaPage.set_notification("/Wikipedia/WikipediaPage")
+        WikipediaPage.set_notification("/app/WikipediaPage")
       else
         # need to encode the article in the url or the login/logged_in functions will fail
         encoded_article = Rho::RhoSupport.url_encode(article)
-        WikipediaPage.set_notification("/Wikipedia/WikipediaPage?search=#{encoded_article}")
+        WikipediaPage.set_notification("/app/WikipediaPage?search=#{encoded_article}")
       end
     
       # make sure we are logged in, this user must exist in rhosync or sync will fail

@@ -1,5 +1,15 @@
 <script language="JavaScript">
-window.location='/app/WikipediaPage'
+  // document.write(location.href);
+  
+  if (location.href =='http://localhost:8080/app/index_erb.iseq?history=true') {
+    window.location ='/app/WikipediaPage/history';
+    
+  }
+  else {
+    window.location ='/app/WikipediaPage';
+    
+  }
+    
 </script>
 
 <ul id="home" selected="true" title="Wikipedia">  
