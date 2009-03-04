@@ -6,6 +6,13 @@
 		<div class="clearer"></div>
 	</form>
 		
-  <%= @data %>
+  <% if @data.nil? %>
+    <div id="loading">
+      <img src="/app/css/ajax-loader.gif" />
+      Page Loading...
+    </div>
+  <% else %>
+    <%= @data %>
+  <% end %>
 	
 </div>

@@ -41,3 +41,9 @@ h1 {position:relative;top:10px;margin:0;padding:0;color:white;text-align:center;
 	position:relative;top:5px;left:2px;text-decoration:none;}
 .left_button {position:absolute; width:50px; height: 30px; top:5px; left: 5px; -webkit-border-image: url(left_button.png) 0 5 0 5;}
 .right_button {position:absolute; width:50px; height: 30px; top:5px; right: 5px;  -webkit-border-image: url(right_button.png) 0 5 0 5;}
+
+
+#loading {
+  margin-top: 200px;
+  text-align: center;
+}
