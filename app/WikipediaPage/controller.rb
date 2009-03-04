@@ -10,14 +10,9 @@ class WikipediaPageController < Rho::RhoController
     @search = @params["search"] || "::Home"
     wiki_get(@search)
 
-     #puts @page.inspect.to_s
-
      # show contents if available
      if @page
        @data = @page.data.unpack("m")[0]
-     else
-       # no page yet....
-       @data = "Please wait..."
      end
      
     render
