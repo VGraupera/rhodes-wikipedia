@@ -14,6 +14,11 @@ body {padding:0;margin:0;}
 	background: url(searchfield_repeat.png) center top repeat-x;
 }
 
+#loading {
+  margin-top: 200px;
+  text-align: center;
+}
+
 
 #search_form .left { width: 20px; height: 19px; position:absolute;left:20px;top:4px;border: none; margin: 0;padding:0;
 	background: url(searchfield_leftcap.png) left top no-repeat; }

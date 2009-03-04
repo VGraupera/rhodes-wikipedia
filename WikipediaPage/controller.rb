@@ -25,10 +25,7 @@ class WikipediaPageController < Rho::RhoController
     
     # show contents if available
     if @page
-      @data = @page.data.unpack("m")[0]
-    else
-      # no page yet....
-      @data = "Please wait..."
+      #@data = @page.data.unpack("m")[0]
     end
 
     render :action => :show, :layout => false
