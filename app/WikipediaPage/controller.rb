@@ -35,7 +35,6 @@ class WikipediaPageController < Rho::RhoController
       WikipediaPage.delete_all
     end
     
-    puts "hello from history"
     @pages = WikipediaPage.find(:all, {:conditions => {'section' => "header"}}, {:order => 'created_at'})
     @pages = @pages.reverse
     render :action => :history
