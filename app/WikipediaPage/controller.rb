@@ -8,30 +8,19 @@ class WikipediaPageController < Rho::RhoController
     puts "WikipediaPage index with params=#{@params.inspect.to_s}"
     
     @search = @params["search"] || "::Home"
-    
-    render
-  end
-  
-  # GET /WikipediaPage/show
-  # this is rendered inside the iframe
-  def show
-    puts "WikipediaPage show with params=#{@params.inspect.to_s}"
-    
-    @search = @params['search']  || "::Home"
-    
     wiki_get(@search)
 
-    #puts @page.inspect.to_s
-    
-    # show contents if available
-    if @page
-      @data = @page.data.unpack("m")[0]
-    else
-      # no page yet....
-      @data = "Please wait..."
-    end
+     #puts @page.inspect.to_s
 
-    render :action => :show, :layout => false
+     # show contents if available
+     if @page
+       @data = @page.data.unpack("m")[0]
+     else
+       # no page yet....
+       @data = "Please wait..."
+     end
+     
+    render
   end
   
   # WikipediaPage/{my page}/fetch

@@ -1,7 +1,4 @@
-
-
 <div>
-	
 	<form id="search_form" method="POST" action="<%=url_for(:action => :fetch)%>">
 		<span class="left" />
 	  <input type="text" name="id" value="<%= @search.gsub('_', ' ') %>"/>
@@ -9,6 +6,6 @@
 		<div class="clearer"></div>
 	</form>
 		
-	<iframe src="<%= "/app/WikipediaPage/show?search=#{Rho::RhoSupport.url_encode(@search)}" %>" width="320px" height="100%" style="margin:0;padding:0;border:none;"></iframe>
+  <%= @data %>
 	
 </div>
