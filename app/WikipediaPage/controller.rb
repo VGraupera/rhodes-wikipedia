@@ -1,8 +1,11 @@
 require 'rho/rhocontroller'
 require 'rho/rhosupport'
+require 'rhom/rhom_source'
 
 class WikipediaPageController < Rho::RhoController
 
+  include Rhom
+  
   # GET /WikipediaPage/index
   def index
     puts "WikipediaPage index with params=#{@params.inspect.to_s}"
@@ -13,6 +16,11 @@ class WikipediaPageController < Rho::RhoController
      # show contents if available
      if @page
        @data = @page.data.unpack("m")[0]
+     end
+     
+     @source = RhomSource.find("22")
+     if @data.nil? && !@source.last_sync_success
+       @data = "Error encountered."
      end
      
     render
