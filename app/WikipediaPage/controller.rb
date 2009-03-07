@@ -9,21 +9,26 @@ class WikipediaPageController < Rho::RhoController
   # GET /WikipediaPage/index
   def index
     puts "WikipediaPage index with params=#{@params.inspect.to_s}"
-    
     @search = @params["search"] || "::Home"
-    wiki_get(@search)
+    
+    @source = RhomSource.find("22")
+    if !@source.last_sync_success && !@params["retry"]
+       redirect :action => :error_page, :query => { :search => @search }
+    else   
+      wiki_get(@search, @params["retry"])
 
-     # show contents if available
-     if @page
-       @data = @page.data.unpack("m")[0]
-     end
+      # show contents if available
+      if @page
+        @data = @page.data.unpack("m")[0]
+      end
      
-     @source = RhomSource.find("22")
-     if @data.nil? && !@source.last_sync_success
-       @data = "Error encountered."
-     end
-     
-    render
+      render
+    end
+  end
+  
+  def error_page
+     @search = @params["search"]
+     render :action => :error_page
   end
   
   # WikipediaPage/{my page}/fetch
@@ -50,7 +55,7 @@ class WikipediaPageController < Rho::RhoController
   
   protected
   
-  def wiki_get(article)
+  def wiki_get(article, retry_attempt=nil)
     puts "WikipediaPageController wiki_get(#{article})\n"
     
     object_id = "data_#{article}"
@@ -65,23 +70,32 @@ class WikipediaPageController < Rho::RhoController
       puts "------Cache miss for #{article}"
       
       if article == "::Home"
-        WikipediaPage.set_notification("/app/WikipediaPage")
-      else
+        WikipediaPage.set_notification(with_retry("/app/WikipediaPage",retry_attempt))
+      else      
         # need to encode the article in the url or the login/logged_in functions will fail
         encoded_article = Rho::RhoSupport.url_encode(article)
-        WikipediaPage.set_notification("/app/WikipediaPage?search=#{encoded_article}")
+        WikipediaPage.set_notification(with_retry("/app/WikipediaPage?search=#{encoded_article}", retry_attempt))      
       end
     
       # make sure we are logged in, this user must exist in rhosync or sync will fail
       if SyncEngine::logged_in == 0
         SyncEngine::login('anonymous', 'password')
       end
-    
+        
       WikipediaPage.ask(article)
     end
   end
   
   private
+  
+  def with_retry(string, retry_attempt)
+    if retry_attempt
+      string += "&retry=true"
+    else
+      string
+    end
+  end
+  
   def strip_braces(str=nil)
     str ? str.gsub(/\{/,"").gsub(/\}/,"") : nil
   end

@@ -1,0 +1,11 @@
+<div>
+  <p>Error encountered</p>
+  
+  <a href="<%= %Q(/app/WikipediaPage?search=#{Rho::RhoSupport.url_encode(@search)}&retry=true) %>">Retry</a>
+  
+  <form method="POST" action="<%= %Q(/app/WikipediaPage?search=#{Rho::RhoSupport.url_encode(@search)}) %>">
+    <input type="hidden" name="retry" value="true">
+    <input type="submit" value="Retry">
+	</form>
+	  
+</div>
