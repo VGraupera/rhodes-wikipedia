@@ -14,17 +14,20 @@ class WikipediaPageController < Rho::RhoController
     
     @header=header_page(@search)
     # if header is present we assume we have the body as well
-    if @header_page
+    if @header
       # is it current?
       if (Time.parse(@header.created_at) > (Time.now - 3600)) || @show_old
+        # puts "OK: show the page we have"
         @page = data_page(@search)
         @data = @page.data.unpack("m")[0]
       else
+        # puts "--- refresh existing page"
         # ask to refresh existing page
         wiki_get(:article=>@search, :refresh=>true)
         @data=nil # shows "please wait..." when @data is nil
       end
     else
+      # puts "--- ask for page 1st time"
       # ask for page for 1st time
       wiki_get(:article=>@search)
       @data=nil
@@ -134,6 +137,7 @@ class WikipediaPageController < Rho::RhoController
       SyncEngine::login('anonymous', 'password')
     end
       
+    puts "WikipediaPage.ask with #{param_string}"
     WikipediaPage.ask(param_string)
   end
     
