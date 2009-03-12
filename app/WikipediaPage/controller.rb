@@ -121,12 +121,11 @@ class WikipediaPageController < Rho::RhoController
     puts "WikipediaPageController wiki_get with #{options.inspect.to_s}\n"
     
     article = options[:article]
-    encoded_article = Rho::RhoSupport.url_encode(article)
     
     if options[:refresh]
-      param_string = "#{encoded_article}&refresh=true"
+      param_string = "#{article}&refresh=true"
     else
-      param_string = encoded_article
+      param_string = article
     end
     
     WikipediaPage.set_notification("/app/WikipediaPage/sync_notify", param_string)
