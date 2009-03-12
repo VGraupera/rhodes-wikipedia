@@ -12,7 +12,7 @@ class WikipediaPageController < Rho::RhoController
     @search = @params["search"] || "::Home"
     @show_old = @params["show_old"] # dont refresh page even if old
     
-    @header=header_page(@search)
+    @header = header_page(@search)
     # if header is present we assume we have the body as well
     if @header_page
       # is it current?
@@ -22,12 +22,10 @@ class WikipediaPageController < Rho::RhoController
       else
         # ask to refresh existing page
         wiki_get(:article=>@search, :refresh=>true)
-        @data=nil # shows "please wait..." when @data is nil
       end
     else
       # ask for page for 1st time
       wiki_get(:article=>@search)
-      @data=nil
     end
 
     render
@@ -114,7 +112,7 @@ class WikipediaPageController < Rho::RhoController
   # options:
   # article, required
   # refresh, optional
-  def wiki_get(options)
+  def wiki_get(options = {})
     puts "WikipediaPageController wiki_get with #{options.inspect.to_s}\n"
     
     article = options[:article]
