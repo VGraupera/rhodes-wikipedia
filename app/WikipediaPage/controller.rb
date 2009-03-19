@@ -18,7 +18,7 @@ class WikipediaPageController < Rho::RhoController
     # if header is present we assume we have the body as well
     if @header
       # is it current?
-      if (Time.parse(@header.created_at) > (Time.now - 60)) || @show_old
+      if (Time.parse(@header.created_at) > (Time.now - 3600)) || @show_old
         # puts "OK: show the page we have"
         @page = data_page(@search)
         @data = @page.data.unpack("m")[0]
