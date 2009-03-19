@@ -1,3 +1,3 @@
 require 'rho'
 
-Rho::RhoConfig::add_source("WikipediaPage", {"url"=>"http://rhosync.rhohub.com/apps/5/sources/22", "source_id"=>22})
+Rho::RhoConfig::add_source("WikipediaPage", {"url"=>"http://m.wikipedia.org:8080/apps/4/sources/1", "source_id"=>1})
