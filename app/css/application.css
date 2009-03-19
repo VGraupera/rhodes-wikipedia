@@ -22,6 +22,12 @@ body {padding:0;margin:0;}
 	
 .clearer {clear:both;}
 
+#content {
+  padding: 0px 5px 0px 5px;
+  width: 310px;
+  overflow: hidden;
+}
+
 .toolbar {
   background: url(toolbar.png) #ff0000 repeat-x;
 	margin:0;
@@ -30,7 +36,7 @@ body {padding:0;margin:0;}
 	height: 45px;
 }
 
-h1 {position:relative;top:10px;margin:0;padding:0;color:white;text-align:center;font-family:Helvetica;font-size:20px;}
+h1#pageTitle {position:relative;top:10px;margin:0;padding:0;color:white;text-align:center;font-family:Helvetica;font-size:20px;}
 	
 #history {padding:0;margin:0;}
 #history ul {list-style-type: none;padding:0;margin:0;}

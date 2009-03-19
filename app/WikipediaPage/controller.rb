@@ -9,10 +9,12 @@ class WikipediaPageController < Rho::RhoController
   # GET /WikipediaPage/index
   def index
     puts "WikipediaPage index with params=#{@params.inspect.to_s}"
+
     @search = @params["search"] || "::Home"
     @show_old = @params["show_old"] # dont refresh page even if old
     
-    @header = header_page(@search)
+    header_page(@search)
+    
     # if header is present we assume we have the body as well
     if @header
       # is it current?
