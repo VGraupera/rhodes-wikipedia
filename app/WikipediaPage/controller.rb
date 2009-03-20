@@ -2,6 +2,17 @@ require 'rho/rhocontroller'
 require 'rho/rhosupport'
 require 'rhom/rhom_source'
 
+class CGI
+  # URL-encode a string.
+  #   url_encoded_string = CGI::escape("'Stop!' said Fred")
+  #      # => "%27Stop%21%27+said+Fred"
+  def CGI::escape(string)
+    string.gsub(/([^ a-zA-Z0-9_.-]+)/) do
+      '%' + $1.unpack('H2' * $1.bytesize).join('%').upcase
+    end.tr(' ', '+')
+  end
+end
+
 class WikipediaPageController < Rho::RhoController
 
   include Rhom
@@ -67,16 +78,17 @@ class WikipediaPageController < Rho::RhoController
     if status == "ok"
       if refresh
         #replace old page with newly refreshed page
-        refresh_header_id = "header_#{@search}_refresh"
-        refresh_data_id = "data_#{@search}_refresh"
         
+        refresh_header_id = "header_#{CGI::escape(@search)}_refresh"
+        refresh_data_id = "data_#{CGI::escape(@search)}_refresh"
+                
         # copy over new data, there are more fields but the content should be the same
         @header = header_page(@search)
         @refresh_header = WikipediaPage.find(refresh_header_id)
         @header.created_at = @refresh_header.created_at
         @header.save
         
-        @data = data_page(@search)
+        @data = data_page(@search)        
         @refresh_data = WikipediaPage.find(refresh_data_id)
         @data.data_length = @refresh_data.data_length
         @data.data = @refresh_data.data
@@ -142,12 +154,12 @@ class WikipediaPageController < Rho::RhoController
   end
     
   def header_page(article)
-    header_id = "header_#{article}"
+    header_id = "header_#{CGI::escape(article)}"
     @header = WikipediaPage.find(header_id)
   end
   
   def data_page(article)
-    data_id = "data_#{article}"
+    data_id = "data_#{CGI::escape(article)}"
     @page = WikipediaPage.find(data_id)
   end
   
