@@ -109,7 +109,7 @@ class WikipediaPageController < Rho::RhoController
     
     @pages = WikipediaPage.find(:all, {:conditions => {'section' => "header"}}, {:order => 'created_at'})
     @pages = @pages.reverse
-    render :action => :history
+    render :action => :history, :layout => false
   end
   
   protected

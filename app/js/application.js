@@ -1,3 +1,7 @@
 var toolbarOptionalButton = function() {
-  window.location = "http://www.google.com"
+  debug("Press history");
+}
+
+var debug = function(thing) {
+  $("#debug").insert(thing + "<br/>");
 }
