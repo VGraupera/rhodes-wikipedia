@@ -93,8 +93,9 @@ class WikipediaPageController < Rho::RhoController
     else
       if refresh
         # refresh failed, so show old page
-        #WebView::refresh();
-        WebView::navigate(url_for :action => :index, :query => { :search => @search, :show_old => true })
+        # WebView::navigate(url_for :action => :index, :query => { :search => @search, :show_old => true })
+        # WebView::navigate should work but fails to load stylsheets on iPhone
+        WebView::navigate "/app?show_old=true&search=#{Rho::RhoSupport.url_encode(@search)}"
       else
         WebView::navigate(url_for :action => :error_page, :query => { :search => @search })
       end
@@ -128,7 +129,7 @@ class WikipediaPageController < Rho::RhoController
       param_string = article
     end
     
-    WikipediaPage.set_notification("/app/WikipediaPage/sync_notify", param_string)
+    WikipediaPage.set_notification("/app/WikipediaPage/sync_notify", "article="+param_string)
       
     # make sure we are logged in. this user must exist in rhosync or sync will fail
     # also make sure that this app has allow anonymous access turned on
