@@ -11,6 +11,16 @@ class CGI
       '%' + $1.unpack('H2' * $1.bytesize).join('%').upcase
     end.tr(' ', '+')
   end
+  
+  # URL-decode a string.
+  #   string = CGI::unescape("%27Stop%21%27+said+Fred")
+  #      # => "'Stop!' said Fred"
+  def CGI::unescape(string)
+    enc = string.encoding
+    string.tr('+', ' ').gsub(/((?:%[0-9a-fA-F]{2})+)/) do
+      [$1.delete('%')].pack('H*').force_encoding(enc)
+    end
+  end
 end
 
 class WikipediaPageController < Rho::RhoController
@@ -22,6 +32,7 @@ class WikipediaPageController < Rho::RhoController
     puts "WikipediaPage index with params=#{@params.inspect.to_s}"
 
     @search = @params["search"] || "::Home"
+    @search = CGI::unescape(@search)
     @show_old = @params["show_old"] # dont refresh page even if old
     
     header_page(@search)
@@ -62,6 +73,9 @@ class WikipediaPageController < Rho::RhoController
       
     # strip braces which surround ID
     @search = strip_braces(@params['id'])
+    
+    # fetch param is double encoded by server, rhodes unencodes once
+    @search = CGI::unescape(@search)
 
     redirect :action => :index, :query => { :search => @search }
   end
