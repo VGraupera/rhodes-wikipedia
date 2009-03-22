@@ -1,7 +1,8 @@
 var toolbarOptionalButton = function() {
-  debug("Press history");
-}
-
-var debug = function(thing) {
-  $("#debug").insert(thing + "<br/>");
+  $.get("/app/WikipediaPage/history", function(data) {
+    $('#history_box').html(data).show('fast');
+    $('#wrapper').hide();
+    $('a').hide();
+    return 'false';
+  })
 }

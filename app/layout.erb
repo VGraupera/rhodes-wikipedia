@@ -15,8 +15,9 @@
   	<script language="JavaScript" src="/app/js/application.js" />
 	</head>
 	<body>
-	  <div id='history' style='z-index:2; width: 100%; height: 100%; background: red'>&nbsp;</div>
-		<%= @content %>
-		
+	  <div id='history_box' style='display: none'></div>
+	  <div id='wrapper'>
+		  <%= @content %>
+		</div>
 	</body>
 </html>
