@@ -99,14 +99,11 @@ class WikipediaPageController < Rho::RhoController
         # copy over new data, there are more fields but the content should be the same
         @header = header_page(@search)
         @refresh_header = WikipediaPage.find(refresh_header_id)
-        @header.created_at = @refresh_header.created_at
-        @header.save
+        @header.update_attributes("created_at" => @refresh_header.created_at)
         
         @data = data_page(@search)        
         @refresh_data = WikipediaPage.find(refresh_data_id)
-        @data.data_length = @refresh_data.data_length
-        @data.data = @refresh_data.data
-        @data.save
+        @data.update_attributes("data_length" => @refresh_data.data_length, "data" => @refresh_data.data)
         
         @refresh_header.destroy
         @refresh_data.destroy
