@@ -3,16 +3,16 @@
   
   // this JS is here because iPhone redirects only work to top level
   
-  if (location.href =='http://localhost:8080/app/index_erb.iseq?history=true') {
-    window.location ='/app/WikipediaPage/history';
+  if (location.href == 'http://localhost:8080/app/index_erb.iseq?history=true') {
+    window.location = '/app/WikipediaPage/history';
   }
   else if (/\/app\/index_erb.iseq\?show_old=true/.test(location.href))
   {
     // cut off leading url and just pass on params
-    window.location ='/app/WikipediaPage?'+location.href.substring(41);
+    window.location = '/app/WikipediaPage?'+location.href.substring(41);
   }
   else {
-    window.location ='/app/WikipediaPage';
+    window.location = '/app/WikipediaPage';
   }
     
 </script>

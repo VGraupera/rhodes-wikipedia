@@ -14,6 +14,10 @@ var clearHistory = function() {
 }
 
 var closeHistory = function() {
-  $('#history_box').hide();
-  $('#wrapper').show();
+  if($('#wrapper').size() > 0) {
+    $('#history_box').hide();
+    $('#wrapper').show();
+  } else {
+    window.location = '/app/WikipediaPage';
+  }
 }
