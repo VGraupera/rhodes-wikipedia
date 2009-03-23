@@ -133,10 +133,10 @@ class WikipediaPageController < Rho::RhoController
     
     @pages = WikipediaPage.find(:all, {:conditions => {'section' => "header"}}, {:order => 'created_at'})
     @pages = @pages.reverse
-    if @params['clear']
-      render :action => :history
-    else
+    if @params['ajax']
       render :action => :history, :layout => false
+    else
+      render :action => :history
     end
   end
   
