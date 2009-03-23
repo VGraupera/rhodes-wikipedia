@@ -8,7 +8,7 @@
 <div id="history">
   <ul>
   <% @pages.each do |page| %>
-    <li><%= "<a href=\"index?search=#{Rho::RhoSupport.url_encode(page.question)}\">#{page.question.gsub('_', ' ')}</a>" %></li>
+    <li><%= "<a href=\"WikipediaPage?search=#{Rho::RhoSupport.url_encode(page.question)}\">#{page.question.gsub('_', ' ')}</a>" %></li>
   <% end %>
   </ul>
 </div>
