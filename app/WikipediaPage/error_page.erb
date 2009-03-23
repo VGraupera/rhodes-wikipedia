@@ -1,6 +1,11 @@
 <div>
-  <p>Error encountered</p>
+  <h2>Error encountered</h2>
   
+  <p>This is very new software and we're working really hard to make it as stable as possible. However, as you've just
+  learned, we have more work to do.</p>
+  <p>If you want to help us out, click the link to send us an email detailing what exactly went wrong.</p>
+  <a href="mailto:hcatlin@wikipedia.org?subject=WikipediaError&body=<%= %Q(/app/WikipediaPage?search=#{Rho::RhoSupport.url_encode(@search)}&retry=true) %>">Email Error</a>
+  or 
   <a href="<%= %Q(/app/WikipediaPage?search=#{Rho::RhoSupport.url_encode(@search)}&retry=true) %>">Retry</a>
 	  
 </div>
