@@ -7,9 +7,7 @@ class CGI
   #   url_encoded_string = CGI::escape("'Stop!' said Fred")
   #      # => "%27Stop%21%27+said+Fred"
   def CGI::escape(string)
-    string.gsub(/([^ a-zA-Z0-9_.-]+)/) do
-      '%' + $1.unpack('H2' * $1.bytesize).join('%').upcase
-    end.tr(' ', '+')
+    Rho::RhoSupport.url_encode(string)
   end
   
   # URL-decode a string.
