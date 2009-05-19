@@ -7,7 +7,9 @@ class CGI
   #   url_encoded_string = CGI::escape("'Stop!' said Fred")
   #      # => "%27Stop%21%27+said+Fred"
   def CGI::escape(string)
-    Rho::RhoSupport.url_encode(string)
+    string.gsub(/([^ a-zA-Z0-9_.-]+)/) do
+      '%' + $1.unpack('H2' * $1.bytesize).join('%').upcase
+    end.tr(' ', '+')
   end
   
   # URL-decode a string.
@@ -16,7 +18,7 @@ class CGI
   def CGI::unescape(string)
     enc = string.encoding
     string.tr('+', ' ').gsub(/((?:%[0-9a-fA-F]{2})+)/) do
-      [$1.delete('%')].pack('H*').force_encoding(enc)
+      [$1.delete('%')].pack('H*').force_encoding("utf-8")
     end
   end
 end
@@ -109,6 +111,10 @@ class WikipediaPageController < Rho::RhoController
       
       # now we should have a good fresh page, so show it
       # we should be sitting on index page
+      
+      # Example of new call
+      # WebView.execute_js("alert('I finished loading')")
+      
       WebView::refresh();
       # redirect :action => :index, :query => { :search => @search }
     else
